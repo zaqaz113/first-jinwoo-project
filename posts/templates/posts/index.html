@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jinwoo blog</title>
+</head>
+<body>
+    <header class="menu">
+        <h1 class="menu-img">
+            <a href="#">
+                <img src="#" alt="Jinwoo blog" />
+            </a>
+        </h1>
+        <nav>
+            <h1>Menu</h1>
+            <ul>
+                <li>
+                    <span>Current Page</span>
+                    <a href="{% url 'index' %}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">
+                        Post
+                    </a>
+                </li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'account_logout' %}">로그아웃</a>
+                    {% else %}
+                        <a href="{% url 'account_login' %}">로그인</a>
+                        <a href="{% url 'account_signup' %}">회원가입</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+
+        {% if user.is_authenticated %}
+            <p>{{user}}님의 닉네임은 {{user.nickname}} 입니다 !</p>
+            <p><a href="{% url 'account_change_password' %}">비밀번호 변경</a></p>
+        {% else %}
+            <p>로그아웃 된 상태입니다.</p>
+        {% endif %}
+    </header>
+    {% comment %} <main>
+        <form action="#" method="post">
+            <div>
+                <img src="#" alt="user-img">
+                <input type="file" multiple accept="images/*, video/*"/>
+                <button type="button" aria-label="Upload"></button>
+            </div>
+        </form>
+        <div>
+            자기소개글 입니다.
+        </div>
+        <section>
+            <h1>My Post</h1>
+            <ol>
+                <li>
+                    <article>
+                        <h1>Post from user</h1>
+                        <header>
+                            <a href="#">
+                                title
+                            </a>
+                            <h2>
+                                <a href="#">
+                                    zaqaz113
+                                </a>
+                            </h2>
+                            <dl>
+                                <div>
+                                    <dt>Username</dt>
+                                    <dd>지누</dd>
+                                </div>
+                                <div>
+                                    <dt>dt_created</dt>
+                                    <dd>22-02-21</dd>
+                                </div>
+                                <div>
+                                    <dt>dt_modified</dt>
+                                    <dd>22-02-22</dd>
+                                </div>
+                            </dl>
+                            <div>
+                                <button type="button">글쓰기</button>
+                                <button type="button">삭제하기</button>
+                                <button type="button">수정하기</button>
+                            </div>
+                        </header>
+                        
+                        <p>
+                            post content
+                        </p>
+                    
+                        <footer>
+                            <button type="button">
+                                <span class="sr-only">댓글달기</span>
+                                <strong>
+                                    <!-- 댓글갯수 -->
+                                </strong>
+                            </button>
+                        </footer>
+                    </article>
+                </li>
+            </ol>
+        </section>
+    </main> {% endcomment %}
+</body>
+</html>
