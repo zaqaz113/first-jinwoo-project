@@ -1,55 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jinwoo blog</title>
-</head>
-<body>
-    <header class="menu">
-        <h1 class="menu-img">
-            <a href="#">
-                <img src="#" alt="Jinwoo blog" />
-            </a>
-        </h1>
-        <nav>
-            <h1>Menu</h1>
-            <ul>
-                <li>
-                    <span>Current Page</span>
-                    <a href="{% url 'index' %}">
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        About
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        Post
-                    </a>
-                </li>
-                <li>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'account_logout' %}">로그아웃</a>
-                    {% else %}
-                        <a href="{% url 'account_login' %}">로그인</a>
-                        <a href="{% url 'account_signup' %}">회원가입</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </nav>
+{% extends 'posts_base/base_with_navbar.html' %}
 
-        {% if user.is_authenticated %}
-            <p>{{user}}님의 닉네임은 {{user.nickname}} 입니다 !</p>
-            <p><a href="{% url 'account_change_password' %}">비밀번호 변경</a></p>
-        {% else %}
-            <p>로그아웃 된 상태입니다.</p>
-        {% endif %}
-    </header>
-    {% comment %} <main>
+{% block content %}
+    <main class="site-body">
+        <div class="main-header">
+            <div class="content">
+                <div class="fg"></div>
+                <h1>Jinwoo Blog</h1>
+            </div>
+        </div>
+
         <form action="#" method="post">
             <div>
                 <img src="#" alt="user-img">
@@ -60,58 +19,89 @@
         <div>
             자기소개글 입니다.
         </div>
-        <section>
-            <h1>My Post</h1>
-            <ol>
-                <li>
-                    <article>
-                        <h1>Post from user</h1>
-                        <header>
-                            <a href="#">
-                                title
-                            </a>
-                            <h2>
-                                <a href="#">
-                                    zaqaz113
-                                </a>
-                            </h2>
-                            <dl>
-                                <div>
-                                    <dt>Username</dt>
-                                    <dd>지누</dd>
+
+        <div class="content-list max-content-width">
+            <div class="header">
+                <h2>목록</h2>
+                <a class="cp-ic-button circle newreview" href="#">포스팅 작성</a>
+            </div>
+
+            <div class="contents">
+                {% for travelpost in travelposts %}
+                    <a href="{% url 'travel-detail' travelpost_id%}">
+                        <section class="cp-card content">
+                            <div class="thumb" style="background-image: url('{{travelpost.image1.url}}');"></div>
+                            <div class="body">
+                                <span class="cp-chip green">{{travelpost.travel_name}}</span>
+                                <h2 class="title">{{travelpost.title}}</h2>
+                                <date class="date">{{travelpost.dt_created|date:"Y년 n월 j일"}}</date>
+                                <div class="metadata">
+                                    <div class="review-rating">
+                                        <span class="cp-stars">
+                                            {% for i in ""|ljust:travelpost.rating %}★{% endfor %}
+                                        </span>
+                                    </div>
+                                    <div class="review-author">
+                                        <span>{{travelpost.author.nicknmae}}</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <dt>dt_created</dt>
-                                    <dd>22-02-21</dd>
-                                </div>
-                                <div>
-                                    <dt>dt_modified</dt>
-                                    <dd>22-02-22</dd>
-                                </div>
-                            </dl>
-                            <div>
-                                <button type="button">글쓰기</button>
-                                <button type="button">삭제하기</button>
-                                <button type="button">수정하기</button>
                             </div>
-                        </header>
-                        
-                        <p>
-                            post content
-                        </p>
+                        </section>
+                    </a>
+                {% empty %}
+                    <p class="empty">아직 리뷰가 없어요 :(</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+        {% comment %} <h1>My Post</h1>
+        <ol>
+            <li>
+                <article>
+                    <h1>Post from user</h1>
+                    <header>
+                        <a href="#">
+                            title
+                        </a>
+                        <h2>
+                            <a href="#">
+                                zaqaz113
+                            </a>
+                        </h2>
+                        <dl>
+                            <div>
+                                <dt>Username</dt>
+                                <dd>지누</dd>
+                            </div>
+                            <div>
+                                <dt>dt_created</dt>
+                                <dd>22-02-21</dd>
+                            </div>
+                            <div>
+                                <dt>dt_modified</dt>
+                                <dd>22-02-22</dd>
+                            </div>
+                        </dl>
+                        <div>
+                            <button type="button">글쓰기</button>
+                            <button type="button">삭제하기</button>
+                            <button type="button">수정하기</button>
+                        </div>
+                    </header>
                     
-                        <footer>
-                            <button type="button">
-                                <span class="sr-only">댓글달기</span>
-                                <strong>
-                                    <!-- 댓글갯수 -->
-                                </strong>
-                            </button>
-                        </footer>
-                    </article>
-                </li>
-            </ol>
-        </section>
-    </main> {% endcomment %}
-</body>
-</html>
+                    <p>
+                        post content
+                    </p>
+                
+                    <footer>
+                        <button type="button">
+                            <span class="sr-only">댓글달기</span>
+                            <strong>
+                                <!-- 댓글갯수 -->
+                            </strong>
+                        </button>
+                    </footer>
+                </article>
+            </li>
+        </ol> {% endcomment %}

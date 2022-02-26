@@ -51,3 +51,8 @@ class CustomPasswordValidator:
 def validate_no_special_characters(value):
     if contains_special_character(value):
         raise ValidationError("특수문자를 포함할 수 없습니다.")
+
+
+def validate_travel_lisk(value):
+    if "map.naver.com" not in value and "place.map.kakao.com" not in value:
+        raise ValidationError("naver or kakao맵만 사용가능합니다.")
