@@ -12,6 +12,9 @@ class User(AbstractUser):
         error_messages={"unique": "이미 사용중인 닉네임 입니다."},
     )
 
+    profile_pic = models.ImageField(default="default_profile_pic.jpg", upload_to="profile_pics")
+    intro = models.CharField(max_length=60, blank=True)
+
     def __str__(self):
         return self.email
 
@@ -21,13 +24,13 @@ class TravelPost(models.Model):
     travel_link = models.URLField(validators=[validate_travel_lisk])
 
     RATING_CHOICES = [
-        (1,1),
-        (2,2),
-        (3,3),
-        (4,4),
-        (5,5),
+        (1,"★"),
+        (2,"★★"),
+        (3,"★★★"),
+        (4,"★★★★"),
+        (5,"★★★★★"),
     ]
-    rating = models.IntegerField(choices=RATING_CHOICES)
+    rating = models.IntegerField(choices=RATING_CHOICES, default=None)
 
     image1 = models.ImageField(upload_to="travel_pics")
     image2 = models.ImageField(upload_to="travel_pics", blank=True)

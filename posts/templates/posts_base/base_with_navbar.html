@@ -11,9 +11,9 @@
     <nav>
       <ul class="navbar">
         <li><a href="{% url 'index' %}">Home</a></li>
-        <li><a href="#">About</a></li>
         <li><a href="#">Travel</a></li>
         {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' user.id %}">My profile</a></li>
           <li><a href="{% url 'account_logout' %}">로그아웃</a></li>
         {% else %}
           <li><a href="{% url 'account_login' %}">로그인</a></li>

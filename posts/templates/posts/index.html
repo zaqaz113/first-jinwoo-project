@@ -23,12 +23,12 @@
         <div class="content-list max-content-width">
             <div class="header">
                 <h2>목록</h2>
-                <a class="cp-ic-button circle newreview" href="#">포스팅 작성</a>
+                <a class="cp-ic-button circle newreview" href="{% url 'travel-create' %}">포스팅 작성</a>
             </div>
 
             <div class="contents">
                 {% for travelpost in travelposts %}
-                    <a href="{% url 'travel-detail' travelpost_id%}">
+                    <a href="{% url 'travel-detail' travelpost.id %}">
                         <section class="cp-card content">
                             <div class="thumb" style="background-image: url('{{travelpost.image1.url}}');"></div>
                             <div class="body">
@@ -42,7 +42,8 @@
                                         </span>
                                     </div>
                                     <div class="review-author">
-                                        <span>{{travelpost.author.nicknmae}}</span>
+                                        <div class="cp-avatar" style="background-image: url('{{travelpost.author.profile_pic.url}}')"></div>
+                                        <span>{{travelpost.author.nickname}}</span>
                                     </div>
                                 </div>
                             </div>
